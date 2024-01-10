@@ -10,8 +10,9 @@ public class DataContext: DbContext {
     public DbSet<Category> Categories { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
-        optionsBuilder.UseSqlServer(
-            "Server=192.168.50.40;Port=5432;Database=myDataBase;User Id=postgress;Password=example;");
+        optionsBuilder.UseNpgsql(
+            "Host=192.168.50.40;Port=5432;Database=storage;Username=postgres;Password=example"
+            );
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
