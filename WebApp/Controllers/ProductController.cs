@@ -54,4 +54,23 @@ public class ProductController: ControllerBase {
             return StatusCode(500);
         }
     }
+    
+    [HttpDelete("Delete product")]
+    public async Task<IActionResult> DeleteCategory(ProductResponse productResponse) {
+        try {
+            using (var context = new DataContext()) {
+                var temp = context.Categories.Find(productResponse.Id);
+                if (temp != null) {
+                    context.Categories.Remove(temp);
+                    await context.SaveChangesAsync();
+                }
+            }
+        }
+        catch (Exception e) {
+            Console.WriteLine(e);
+            return StatusCode(500);
+        }
+
+        return Ok();
+    }
 }
