@@ -9,7 +9,7 @@ namespace WebApplication1.Controllers;
 [Route("[controller]")]
 public class CategoryController: ControllerBase {
     [HttpDelete("Delete category")]
-    public async Task<IActionResult> DeleteCategory(CategoryResponse categoryResponse) {
+    public async Task<IActionResult> DeleteCategoryAsync(CategoryResponse categoryResponse) {
         try {
             using (var context = new DataContext()) {
                 var temp = context.Categories.Find(categoryResponse.Id);

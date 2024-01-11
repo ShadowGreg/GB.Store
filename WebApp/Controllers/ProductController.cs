@@ -16,7 +16,8 @@ public class ProductController: ControllerBase {
                 var products = context.Products.Select(x => new Product() {
                     Id = x.Id,
                     Name = x.Name,
-                    Description = x.Description
+                    Description = x.Description,
+                    Cost = x.Cost
                 }).ToList();
                 return Ok(products);
             }
@@ -56,7 +57,7 @@ public class ProductController: ControllerBase {
     }
     
     [HttpDelete("Delete product")]
-    public async Task<IActionResult> DeleteCategory(ProductResponse productResponse) {
+    public async Task<IActionResult> DeleteCategoryAsync(ProductResponse productResponse) {
         try {
             using (var context = new DataContext()) {
                 var temp = context.Categories.Find(productResponse.Id);
@@ -73,4 +74,24 @@ public class ProductController: ControllerBase {
 
         return Ok();
     }
+    
+    [HttpPut("Update product coast")]
+    public async Task<IActionResult> UpdateProductCoastAsync(CoastResponse productResponse) {
+        try {
+            using (var context = new DataContext()) {
+                var temp = context.Products.Find(productResponse.Id);
+                if (temp != null) {
+                    temp.Cost = productResponse.Cost;
+                    await context.SaveChangesAsync();
+                }
+            }
+        }
+        catch (Exception e) {
+            Console.WriteLine(e);
+            return StatusCode(500);
+        }
+
+        return Ok();
+    }
+    
 }
