@@ -1,4 +1,5 @@
 ﻿using Core.Models;
+using DataBase.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataBase.Repositories;
@@ -12,7 +13,7 @@ public class DataContext: DbContext {
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
         optionsBuilder.UseNpgsql(
             "Host=192.168.50.40;Port=5432;Database=storage;Username=postgres;Password=example"
-            );
+        );
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
@@ -40,7 +41,7 @@ public class DataContext: DbContext {
 
             product.HasOne(x => x.Category)
                 .WithMany(c => c.Products)
-                .HasForeignKey(x => x.Id)
+                .HasForeignKey(x => x.CategoryId)
                 .HasConstraintName("ProductsToCategory");
 
             product.HasMany(x => x.Storages)
