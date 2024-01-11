@@ -25,8 +25,11 @@ public class Startup {
         services.AddSwaggerGen();
 
         services.AddDbContext<DataContext>(options =>
-            options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"))
-        );
+        {
+            options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
+            options.UseLazyLoadingProxies();
+
+        });
 
         services.AddScoped<IDbInitializer, EfDbInitializer>();
     }

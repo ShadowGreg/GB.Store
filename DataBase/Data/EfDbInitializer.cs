@@ -1,31 +1,73 @@
 ﻿using DataBase.Repositories;
 
-namespace DataBase.Data; 
+namespace DataBase.Data;
 
-public class EfDbInitializer : IDbInitializer
-{
+public class EfDbInitializer: IDbInitializer {
     private readonly DataContext _dataContext;
 
-    public EfDbInitializer(DataContext dataContext)
-    {
+    public EfDbInitializer(DataContext dataContext) {
         _dataContext = dataContext;
     }
-        
+
     public void InitializeDb()
     {
         _dataContext.Database.EnsureDeleted();
         _dataContext.Database.EnsureCreated();
 
-        _dataContext.AddRange(DatabaseSeeder.Categories);
+        InitializeCategories();
+        InitializeStorages();
+        InitializeProducts();
+        InitializeProductsStorages();
+    }
+
+    private void InitializeCategories()
+    {
+        foreach (var category in InitializeDatabaseSeeder.Categories)
+        {
+            if (!_dataContext.Categories.Any(c => c.Id == category.Id))
+            {
+                _dataContext.Categories.Add(category);
+            }
+        }
         _dataContext.SaveChanges();
-            
-        _dataContext.AddRange(DatabaseSeeder.Products);
+    }
+
+    private void InitializeStorages()
+    {
+        foreach (var storage in InitializeDatabaseSeeder.Storages)
+        {
+            if (!_dataContext.Storages.Any(s => s.Id == storage.Id))
+            {
+                _dataContext.Storages.Add(storage);
+            }
+        }
         _dataContext.SaveChanges();
-        
-        _dataContext.AddRange(DatabaseSeeder.Storages);
+    }
+
+    private void InitializeProducts()
+    {
+        foreach (var product in InitializeDatabaseSeeder.Products)
+        {
+            if (!_dataContext.Products.Any(p => p.Id == product.Id))
+            {
+                _dataContext.Products.Add(product);
+            }
+        }
         _dataContext.SaveChanges();
-        
-        _dataContext.AddRange(DatabaseSeeder.ProductsStorages);
+    }
+
+    private void InitializeProductsStorages()
+    {
+        foreach (var productsStorage in InitializeDatabaseSeeder.ProductsStorages)
+        {
+            var existingProductsStorage = _dataContext.ProductsStorages
+                .FirstOrDefault(ps => ps.ProductId == productsStorage.ProductId && ps.StorageId == productsStorage.StorageId);
+
+            if (existingProductsStorage == null)
+            {
+                _dataContext.ProductsStorages.Add(productsStorage);
+            }
+        }
         _dataContext.SaveChanges();
     }
 }

@@ -10,6 +10,11 @@ public class DataContext: DbContext {
     public DbSet<Storage> Storages { get; set; }
     public DbSet<Category> Categories { get; set; }
 
+    public DataContext() { }
+
+    public DataContext(DbContextOptions<DataContext> options): base(options) { }
+
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
         optionsBuilder.UseNpgsql(
             "Host=192.168.50.40;Port=5432;Database=storage;Username=postgres;Password=example"
@@ -46,7 +51,10 @@ public class DataContext: DbContext {
 
             product.HasMany(x => x.Storages)
                 .WithMany(y => y.Products)
-                .UsingEntity<ProductsStorage>();
+                .UsingEntity<ProductsStorage>(
+                    p=>p.HasOne<Storage>().WithMany().HasForeignKey(s=>s.StorageId),
+                    s=>s.HasOne<Product>().WithMany().HasForeignKey(p=>p.ProductId)
+                    );
             /// https://learn.microsoft.com/ru-ru/ef/core/modeling/relationships/many-to-many
             /// https://learn.microsoft.com/ru-ru/ef/core/modeling/relationships/many-to-many#:~:text=protected-,override%20void%20OnModelCreating(ModelBuilder%20modelBuilder)%0A%7B%0A%20%20%20%20modelBuilder.Entity%3CPost%3E()%0A%20%20%20%20%20%20%20%20.HasMany(e%20%3D%3E%20e.Tags)%0A%20%20%20%20%20%20%20%20.WithMany(e%20%3D%3E%20e.Posts)%0A%20%20%20%20%20%20%20%20.UsingEntity%3CPostTag%3E()%3B%0A%7D,-%D0%9E%D0%BD%20PostIdTagId
         });
@@ -73,7 +81,10 @@ public class DataContext: DbContext {
 
                 storage.HasMany(e => e.Products)
                     .WithMany(e => e.Storages)
-                    .UsingEntity<ProductsStorage>();
+                    .UsingEntity<ProductsStorage>(
+                        s=>s.HasOne<Product>().WithMany().HasForeignKey(p=>p.ProductId),
+                        p=>p.HasOne<Storage>().WithMany().HasForeignKey(s=>s.StorageId)
+                        );
             });
         });
     }

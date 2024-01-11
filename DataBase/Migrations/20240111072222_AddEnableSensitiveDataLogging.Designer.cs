@@ -3,6 +3,7 @@ using System;
 using DataBase.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DataBase.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240111072222_AddEnableSensitiveDataLogging")]
+    partial class AddEnableSensitiveDataLogging
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -92,19 +95,9 @@ namespace DataBase.Migrations
                     b.Property<int?>("StorageId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("ProductId1")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("StorageId1")
-                        .HasColumnType("integer");
-
                     b.HasKey("ProductId", "StorageId");
 
-                    b.HasIndex("ProductId1");
-
                     b.HasIndex("StorageId");
-
-                    b.HasIndex("StorageId1");
 
                     b.ToTable("ProductsStorages");
                 });
@@ -142,25 +135,17 @@ namespace DataBase.Migrations
 
             modelBuilder.Entity("Core.Models.ProductsStorage", b =>
                 {
-                    b.HasOne("Core.Models.Product", null)
+                    b.HasOne("Core.Models.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Core.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId1");
-
-                    b.HasOne("Core.Models.Storage", null)
+                    b.HasOne("Core.Models.Storage", "Storage")
                         .WithMany()
                         .HasForeignKey("StorageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Core.Models.Storage", "Storage")
-                        .WithMany()
-                        .HasForeignKey("StorageId1");
 
                     b.Navigation("Product");
 
