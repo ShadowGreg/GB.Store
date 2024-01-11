@@ -36,9 +36,8 @@ public class ProductController: ControllerBase {
                         Id = productResponse.Id,
                         Name = productResponse.Name,
                         Description = productResponse.Description,
-                        Cost = 10,
-                        CategoryId = 0,
-                        Category = null,
+                        Cost = productResponse.Cost,
+                        CategoryId = productResponse.CategoryId,
                     });
                     context.SaveChanges();
                     var id = context.Products

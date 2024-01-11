@@ -1,7 +1,9 @@
-﻿namespace WebApplication1.Models;
+﻿using Core.Models;
 
-public class ProductResponse {
-    public int Id { get; set; }
-    public string? Name { get; set; }
-    public string? Description { get; set; }
+namespace WebApplication1.Models;
+
+public class ProductResponse: BaseModel {
+    public int Cost { get; set; }
+    public virtual int CategoryId { get; set; }
+    public virtual string? Category { get; set; }
 }
