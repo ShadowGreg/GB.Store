@@ -1,7 +1,16 @@
+using DataBase.Repositories;
+using Microsoft.EntityFrameworkCore;
+
 namespace WebApplication1 {
     public class Program {
         public static void Main(string[] args) {
-            CreateHostBuilder(args).Build().Run();
+            var host = CreateHostBuilder(args).Build();
+            using (var scope = host.Services.CreateScope()) {
+                var db = scope.ServiceProvider.GetRequiredService<DataContext>();
+                db.Database.Migrate();
+            }
+            host.Run();
+
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
