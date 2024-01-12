@@ -1,5 +1,4 @@
-﻿using Core.Models;
-using DataBase.Repositories;
+﻿using DataBase.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication1.Models;
 
@@ -8,7 +7,10 @@ namespace WebApplication1.Controllers;
 [ApiController]
 [Route("[controller]")]
 public class CategoryController: ControllerBase {
-    [HttpDelete("Delete category")]
+    /// <summary>
+    /// Удалить категорию из базы данных
+    /// </summary>
+    [HttpDelete("DeleteCategory")]
     public async Task<IActionResult> DeleteCategoryAsync(CategoryResponse categoryResponse) {
         try {
             using (var context = new DataContext()) {

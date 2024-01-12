@@ -4,6 +4,7 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <TargetFrameworks>net6.0;net6.0-windows</TargetFrameworks>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <RootNamespace>WebApplication1</RootNamespace>
     </PropertyGroup>
 

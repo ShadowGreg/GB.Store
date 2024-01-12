@@ -28,7 +28,6 @@ public class Startup {
         {
             options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
             options.UseLazyLoadingProxies();
-
         });
 
         services.AddScoped<IDbInitializer, EfDbInitializer>();
@@ -48,7 +47,17 @@ public class Startup {
 
         app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
-        // Call the InitializeDb method to seed the database
-        dbInitializer.InitializeDb();
+        using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope()) {
+            var dbContext = serviceScope.ServiceProvider.GetService<DataContext>();
+            if (!dbContext.Database.CanConnect()) {
+                dbContext.Database.EnsureCreated();
+            }
+            else if (!dbContext.Products.Any() || !dbContext.Storages.Any()) {
+                // Handle the case when there are no records in the database
+                dbInitializer.InitializeDb();
+                Console.WriteLine(
+                    "There are no records in the database. Please add some records before running the application.");
+            }
+        }
     }
 }
