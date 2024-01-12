@@ -40,6 +40,9 @@ public class Startup {
             app.UseSwagger();
             app.UseSwaggerUI();
         }
+        else {
+            app.UseHttpsRedirection();
+        }
 
         app.UseHttpsRedirection();
         app.UseRouting();

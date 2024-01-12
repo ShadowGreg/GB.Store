@@ -7,9 +7,6 @@ namespace WebApplication1.Controllers;
 [ApiController]
 [Route("[controller]")]
 public class CategoryController: ControllerBase {
-    /// <summary>
-    /// Удалить категорию из базы данных
-    /// </summary>
     [HttpDelete("DeleteCategory")]
     public async Task<IActionResult> DeleteCategoryAsync(CategoryResponse categoryResponse) {
         try {

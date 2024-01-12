@@ -9,7 +9,7 @@ namespace WebApplication1.Controllers;
 [ApiController]
 [Route("[controller]")]
 public class ProductController: ControllerBase {
-    [HttpGet("Get products")]
+    [HttpGet("GetProducts")]
     public IActionResult GetProducts() {
         try {
             using (var context = new DataContext()) {
@@ -28,7 +28,7 @@ public class ProductController: ControllerBase {
         }
     }
 
-    [HttpPost("Add product to data base")]
+    [HttpPost("AddProduct")]
     public IActionResult PutProduct(ProductResponse productResponse) {
         try {
             using (var context = new DataContext()) {
@@ -55,8 +55,8 @@ public class ProductController: ControllerBase {
             return StatusCode(500);
         }
     }
-    
-    [HttpDelete("Delete product")]
+
+    [HttpDelete("DeleteProduct")]
     public async Task<IActionResult> DeleteCategoryAsync(ProductResponse productResponse) {
         try {
             using (var context = new DataContext()) {
@@ -74,8 +74,8 @@ public class ProductController: ControllerBase {
 
         return Ok();
     }
-    
-    [HttpPut("Update product coast")]
+
+    [HttpPut("UpdateCoast")]
     public async Task<IActionResult> UpdateProductCoastAsync(CoastResponse productResponse) {
         try {
             using (var context = new DataContext()) {
@@ -93,5 +93,4 @@ public class ProductController: ControllerBase {
 
         return Ok();
     }
-    
 }
