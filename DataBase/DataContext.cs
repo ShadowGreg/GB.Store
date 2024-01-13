@@ -11,11 +11,12 @@ public class DataContext: DbContext {
     public DataContext() { }
     public DataContext(DbContextOptions<DataContext> options): base(options) { }
 
-    // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
-    //     optionsBuilder.UseNpgsql(
-    //         "Host=192.168.50.40;Port=5432;Database=storage;Username=postgres;Password=example"
-    //     );
-    // }
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
+        if (!optionsBuilder.IsConfigured)
+        {
+            optionsBuilder.UseNpgsql("Host=192.168.50.40;Port=5432;Database=storage;Username=postgres;Password=example");
+        }
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
         base.OnModelCreating(modelBuilder);
