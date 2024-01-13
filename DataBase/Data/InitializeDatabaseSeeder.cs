@@ -1,4 +1,5 @@
 ﻿using Core.Models;
+using Category = Core.Models.Category;
 
 namespace DataBase.Data {
     public static class InitializeDatabaseSeeder {

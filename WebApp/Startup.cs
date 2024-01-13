@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DataBase;
+using DataBase.Repositories.Abstraction;
+using DataBase.Repositories.Repo;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebApplication1;
 
@@ -23,6 +26,10 @@ public class Startup {
 
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
+        services.AddAutoMapper(typeof(MappingProfile));
+
+        //services.AddSingleton<IProductRepository,ProductRepository>();
+        services.AddMemoryCache(options => options.TrackStatistics = true);
 
         services.AddDbContext<DataContext>(options =>
         {
