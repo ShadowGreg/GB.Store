@@ -3,7 +3,7 @@ using Core.Models;
 using DataBase.Repositories.DTOModels;
 using Category = DataBase.Repositories.DTOModels.Category;
 
-namespace DataBase.Repositories.Repo;
+namespace DataBase.Repositories.MappingSettings;
 
 public class MappingProfile: Profile {
     public MappingProfile() {

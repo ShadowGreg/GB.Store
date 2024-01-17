@@ -1,5 +1,3 @@
-﻿using DataBase.Repositories.DTOModels;
-
-namespace Core.Models;
+﻿namespace DataBase.Repositories.DTOModels;
 
 public class StorageDTO: BaseModelDTO { }

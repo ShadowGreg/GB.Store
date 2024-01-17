@@ -1,6 +1,6 @@
 ﻿using DataBase;
 using DataBase.Repositories.Abstraction;
-using DataBase.Repositories.Repo;
+using DataBase.Repositories.MappingSettings;
 using Microsoft.EntityFrameworkCore;
 
 namespace WebApplication1;
