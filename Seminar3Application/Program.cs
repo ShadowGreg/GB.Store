@@ -17,6 +17,8 @@ builder.Services.AddMemoryCache();
 builder.Services.AddTransient<IProductService, ProductService>();
 builder.Services.AddTransient<IStorageService, StorageService>();
 builder.Services.AddTransient<ICategoryService, CategoryService>();
+builder.Services.AddTransient<IStorageFilling, StorageFilling>();
+
 // builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 // builder.Host.ConfigureContainer<ContainerBuilder>(cb =>
 // {
